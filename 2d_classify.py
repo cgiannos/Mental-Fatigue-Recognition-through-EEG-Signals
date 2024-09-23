@@ -46,7 +46,7 @@ sampling_points = 769
 
 class_names = ['Fatigued', 'Rested']
 
-data = np.load(r'/home/st1059685/uploads/biosignals/raw_mental.npz')
+data = np.load(r'path')
 features = data['features']
 features = features.reshape([len(features), channels, sampling_points, 1])
 labels = data['labels']
@@ -65,19 +65,6 @@ def cnn_model():
     # x444 = layers.Dropout(0.8)(conv2)
     #conv3 = layers.Conv2D(128, (3, 3), activation='relu', padding='same')(conv2)
     #conv3 = layers.MaxPooling2D((1, 2), padding='valid')(conv3)
-
-    a1 = layers.Permute((3, 2 ,1))(conv2)
-    a1 = layers.Dense(channels, 'softmax')(a1)
-    a1 = layers.Permute((3, 2 ,1))(a1)
-    # x7 = model.layers[6].output
-    a1 = layers.Multiply()([conv2, a1])  
-    # x8 = model.layers[7].output
-    a2 = layers.Permute((3, 2 ,1))(a1)
-    a2 = layers.Dense(channels, 'softmax')(a2)
-    a2 = layers.Permute((3, 2 ,1))(a2)
-    # y2 = model.layers[10].output
-    a22 = layers.Multiply()([a1, a2])
-
 
 
     x13 = layers.Dropout(0.5)(a22)
