@@ -67,7 +67,7 @@ def cnn_model():
     #conv3 = layers.MaxPooling2D((1, 2), padding='valid')(conv3)
 
 
-    x13 = layers.Dropout(0.5)(a22)
+    x13 = layers.Dropout(0.5)(conv3)
     x14 = layers.Flatten()(x13)
   
     with tf.device("cpu:0"):
