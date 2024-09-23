@@ -43,7 +43,7 @@ sampling_points = 769
 
 class_names = ['Fatigued', 'Rested']
 
-data = np.load(r'/home/st1059685/uploads/mental.npz')
+data = np.load(r'path')
 print(data.keys())
 features = data['features']
 features = features.reshape([len(features), bands, channels, sampling_points, 1])
@@ -61,24 +61,9 @@ def cnn_model():
     conv2 = layers.Conv3D(64, (5, 5, 5), activation='relu', padding='same')(conv1)
     conv2 = layers.MaxPooling3D((2, 1, 2), padding='valid')(conv2)
     # x444 = layers.Dropout(0.8)(conv2)
-    # conv3 = layers.Conv3D(128, (5, 5, 5), activation='relu', padding='same')(conv2)
-    # conv3 = layers.MaxPooling3D((1, 1, 2), padding='valid')(conv3)
-
-    a1 = layers.Permute((1, 4, 3, 2))(conv2)
-    a1 = layers.Dense(channels, 'softmax')(a1)
-    a1 = layers.Permute((1, 4, 3, 2))(a1)
-    # x7 = model.layers[6].output
-    a1 = layers.Multiply()([conv2, a1])  # layer8
-    # x8 = model.layers[7].output
-    a2 = layers.Permute((1, 4, 3, 2))(a1)
-    a2 = layers.Dense(channels, 'softmax')(a2)
-    a2 = layers.Permute((1, 4, 3, 2))(a2)
-    # y2 = model.layers[10].output
-    a22 = layers.Multiply()([a1, a2])
 
 
-
-    x13 = layers.Dropout(0.5)(a22)
+    x13 = layers.Dropout(0.5)(conv2)
     x14 = layers.Flatten()(x13)
   
     with tf.device("cpu:0"):
@@ -177,13 +162,13 @@ def plot_confusion_matrix(predicted_labels_list, y_val_list):
 # Plot non-normalized confusion matrix
     plt.figure()
     generate_confusion_matrix(cnf_matrix, classes=class_names, title='Confusion matrix, without normalization')
-    plt.savefig(r'/home/st1059685/uploads/biosignal1.png')
+    plt.savefig(r'path')
     #plt.show()
 
 # Plot normalized confusion matrix
     plt.figure()
     generate_confusion_matrix(cnf_matrix, classes=class_names, normalize=True, title='Normalized confusion matrix')
-    plt.savefig(r'/home/st1059685/uploads/biosignal2.png')
+    plt.savefig(r'path')
     #plt.show()
 
 def generate_confusion_matrix(cnf_matrix, classes, normalize=False, title='Confusion matrix'):
